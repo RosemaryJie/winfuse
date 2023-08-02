@@ -44,33 +44,33 @@ install:
 #     . "C:\WSL\WinFuse-Ubuntu2004\ubuntu2004.exe" run "echo -e `"`"appveyor\tALL=(ALL)\tNOPASSWD: ALL`"`" > /etc/sudoers.d/appveyor"
 # - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu2004.exe" run chmod 0755 /etc/sudoers.d/appveyor
 # - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu2004.exe" config --default-user appveyor
-- wslconfig /setdefault Ubuntu-20.04
-- wsl -- lsb_release -a
-# install WSL tools
-- appveyor AddMessage "Install WSL tools" -Category Information
-- wsl -- sudo apt-get update; sudo apt-get install -y g++ gdb make ninja-build rsync zip libfuse3-dev
+# - wslconfig /setdefault Ubuntu-20.04
+# - wsl -- lsb_release -a
+# # install WSL tools
+# - appveyor AddMessage "Install WSL tools" -Category Information
+# - wsl -- sudo apt-get update; sudo apt-get install -y g++ gdb make ninja-build rsync zip libfuse3-dev
 # enable test-signing and verifier and reboot
-# - appveyor AddMessage "Change boot configuration and reboot" -Category Information
-# - bcdedit /set testsigning on
-# - verifier /standard /driver winfuse-x64.sys || ver>nul
-# - if exist %SystemRoot%\memory.dmp del %SystemRoot%\memory.dmp
-# - ps: Restart-Computer -Force
-# - ps: Start-Sleep -s 60
+- appveyor AddMessage "Change boot configuration and reboot" -Category Information
+- bcdedit /set testsigning on
+- verifier /standard /driver winfuse-x64.sys || ver>nul
+- if exist %SystemRoot%\memory.dmp del %SystemRoot%\memory.dmp
+- ps: Restart-Computer -Force
+- ps: Start-Sleep -s 60
 
-# build_script:
-# - appveyor AddMessage "Reboot complete" -Category Information
-# - tools\build.bat %CONFIGURATION%
-# - for %%f in ("build\VStudio\build\%CONFIGURATION%\winfuse-*-x64.msi") do start /wait msiexec /i %%f /qn INSTALLLEVEL=1000
-# - copy ext\libfuse\build\%CONFIGURATION%\x86\lib\fuse3-x86.dll "C:\Program Files\WinFuse\opt\libfuse\bin"
-# - copy ext\libfuse\build\%CONFIGURATION%\x86\lib\fuse3-x86.lib "C:\Program Files\WinFuse\opt\libfuse\lib"
+build_script:
+- appveyor AddMessage "Reboot complete" -Category Information
+- tools\build.bat %CONFIGURATION%
+- for %%f in ("build\VStudio\build\%CONFIGURATION%\winfuse-*-x64.msi") do start /wait msiexec /i %%f /qn INSTALLLEVEL=1000
+- copy ext\libfuse\build\%CONFIGURATION%\x86\lib\fuse3-x86.dll "C:\Program Files\WinFuse\opt\libfuse\bin"
+- copy ext\libfuse\build\%CONFIGURATION%\x86\lib\fuse3-x86.lib "C:\Program Files\WinFuse\opt\libfuse\lib"
 
-# test_script:
-# - tools\nmake-ext-test.bat
-# - tools\run-tests.bat %CONFIGURATION%
-# - tools\run-tests.bat %CONFIGURATION% sample
-# - if exist %SystemRoot%\memory.dmp exit 1
+test_script:
+- tools\nmake-ext-test.bat
+- tools\run-tests.bat %CONFIGURATION%
+- tools\run-tests.bat %CONFIGURATION% sample
+- if exist %SystemRoot%\memory.dmp exit 1
 
-# on_finish:
-# - if exist %SystemRoot%\memory.dmp (7z a memory.dmp.zip %SystemRoot%\memory.dmp && appveyor PushArtifact memory.dmp.zip)
-# - verifier /query
-# #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+- if exist %SystemRoot%\memory.dmp (7z a memory.dmp.zip %SystemRoot%\memory.dmp && appveyor PushArtifact memory.dmp.zip)
+- verifier /query
+#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
