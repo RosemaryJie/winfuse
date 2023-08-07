@@ -1,7 +1,6 @@
 version: '{build}'
 
-build_cloud: <private_build_cloud_name>
-image: <private_build_cloud_image>
+image: 
 
 environment:
   matrix:
