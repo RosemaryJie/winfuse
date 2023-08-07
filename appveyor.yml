@@ -1,6 +1,7 @@
 version: '{build}'
 
-image: 
+build_cloud: DESKTOP-TL0EA1S
+image: Windows
 
 environment:
   matrix:
