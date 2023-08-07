@@ -1,6 +1,7 @@
 version: '{build}'
 
-image: Visual Studio 2019
+build_cloud: <private_build_cloud_name>
+image: <private_build_cloud_image>
 
 environment:
   matrix:
