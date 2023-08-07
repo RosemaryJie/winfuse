@@ -16,7 +16,7 @@ init:
 #- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
-- git submodule update --init --recursive
+# - git submodule update --init --recursive
 # install WinFsp
 - appveyor AddMessage "Install WinFsp" -Category Information
 - if %WINFSP%==rel appveyor DownloadFile https://github.com/billziss-gh/winfsp/releases/download/v1.8B2/winfsp-1.8.20221.msi
