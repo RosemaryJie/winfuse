@@ -37,14 +37,14 @@ install:
 # - ps: (New-Object Net.WebClient).DownloadFile('https://aka.ms/wslubuntu2004', "$env:TEMP\wsl-ubuntu-2004.zip")
 # - ps: Expand-Archive -Path "$env:TEMP\wsl-ubuntu-2004.zip" -DestinationPath "C:\WSL\WinFuse-Ubuntu2004" -Force
 # # - ps: Remove-Item "$env:TEMP\wsl-ubuntu-2004.zip"
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" install --root
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run adduser appveyor --gecos `"First,Last,RoomNumber,WorkPhone,HomePhone`" --disabled-password
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run "echo 'appveyor:Password12!' | sudo chpasswd"
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run usermod -aG sudo appveyor
-# - ps: |
-#     . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run "echo -e `"`"appveyor\tALL=(ALL)\tNOPASSWD: ALL`"`" > /etc/sudoers.d/appveyor"
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run chmod 0755 /etc/sudoers.d/appveyor
-# - ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" config --default-user appveyor
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" install --root
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run adduser appveyor --gecos `"First,Last,RoomNumber,WorkPhone,HomePhone`" --disabled-password
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run "echo 'appveyor:Password12!' | sudo chpasswd"
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run usermod -aG sudo appveyor
+- ps: |
+    . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run "echo -e `"`"appveyor\tALL=(ALL)\tNOPASSWD: ALL`"`" > /etc/sudoers.d/appveyor"
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" run chmod 0755 /etc/sudoers.d/appveyor
+- ps: . "C:\WSL\WinFuse-Ubuntu2004\ubuntu.exe" config --default-user appveyor
 - wslconfig /setdefault Ubuntu-20.04
 - wsl -- lsb_release -a
 # install WSL tools
